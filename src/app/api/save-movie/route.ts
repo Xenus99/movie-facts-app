@@ -7,17 +7,31 @@ export async function POST(req: NextRequest) {
   try {
     const { email, name, image, favorite } = await req.json();
 
-    if (!email || !name || !favorite) {
-      return new NextResponse('Missing required fields', { status: 400 });
+    if (!email) {
+      return new NextResponse('Missing email', { status: 400 });
     }
 
-    const user = await prisma.userMovie.upsert({
-      where: { email },
-      update: { favorite },
-      create: { email, name, image, favorite },
-    });
+    if (favorite) {
+      // Save or update favorite movie
+      const user = await prisma.userMovie.upsert({
+        where: { email },
+        update: { favorite },
+        create: { email, name: name ?? '', image, favorite },
+      });
 
-    return NextResponse.json(user);
+      return NextResponse.json({ message: 'Favorite movie saved!', favorite: user.favorite });
+    } else {
+      // Just retrieve existing favorite (e.g., after login)
+      const user = await prisma.userMovie.findUnique({
+        where: { email },
+      });
+
+      if (user?.favorite) {
+        return NextResponse.json({ favorite: user.favorite });
+      } else {
+        return new NextResponse(null, { status: 204 }); // no favorite set yet
+      }
+    }
   } catch (err) {
     console.error('Save movie error:', err);
     return new NextResponse('Server error', { status: 500 });
