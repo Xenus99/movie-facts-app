@@ -11,26 +11,6 @@ export default function AuthButton() {
   const [loading, setLoading] = useState(true);
 
   // Fetch fun fact
-  // useEffect(() => {
-  //   const fetchFact = async () => {
-  //     setLoading(true);
-  //     const movie = localStorage.getItem('favorite');
-  //     if (!movie) return;
-  //     console.log("Geting Fact:");
-
-  //     const res = await fetch('/api/fun-fact', {
-  //       method: 'POST',
-  //       headers: { 'Content-Type': 'application/json' },
-  //       body: JSON.stringify({ movie }),
-  //     });
-  //     const data = await res.json();
-  //     setFact(data.fact);
-  //     setLoading(false);
-  //   };
-
-  //   if (session) fetchFact();
-  // }, [session]);
-  
   useEffect(() => {
   const fetchFact = async () => {
     setLoading(true);
