@@ -20,7 +20,9 @@ export async function POST(req: NextRequest) {
       });
 
       return NextResponse.json({ message: 'Favorite movie saved!', favorite: user.favorite });
-    } else {
+    }
+    
+    else {
       // Just retrieve existing favorite (e.g., after login)
       const user = await prisma.userMovie.findUnique({
         where: { email },
@@ -32,7 +34,9 @@ export async function POST(req: NextRequest) {
         return new NextResponse(null, { status: 204 }); // no favorite set yet
       }
     }
-  } catch (err) {
+  } 
+  
+  catch (err) {
     console.error('Save movie error:', err);
     return new NextResponse('Server error', { status: 500 });
   }

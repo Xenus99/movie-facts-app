@@ -18,7 +18,7 @@ export async function POST(req: Request) {
       messages: [
         {
           role: 'user',
-          content: `Tell me one fun and surprising fact about the movie "${movie}". Keep it short.`,
+          content: `Tell me one fun and surprising fact about the movie "${movie}". Just answer with the fact in one sentence.`,
         },
       ],
       temperature: 0.8,

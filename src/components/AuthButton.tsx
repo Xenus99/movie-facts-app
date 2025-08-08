@@ -6,8 +6,8 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
 export default function AuthButton() {
-  const { data: session } = useSession();
-  const [fact, setFact] = useState('');
+  const { data: session } = useSession();   // const session = useSession().data;
+  const [fact, setFact] = useState('');   // const fact = (''), setFact('hi') will change the value if fact to 'hi')
   const [loading, setLoading] = useState(true);
 
   // Fetch fun fact
@@ -30,8 +30,8 @@ export default function AuthButton() {
     const movie = movieData.favorite;
 
     console.log("Favorite movie:", movie);
+
     if (!movie) {
-      console.log("Favorite movie:", movie);
       setLoading(false);
       return;
     }
@@ -49,7 +49,7 @@ export default function AuthButton() {
   };
 
   if (session) fetchFact();
-}, [session]);
+}, [session]);      // 2nd arguement: Rerun useEffect when Session changes
 
 
   // Ask for favorite movie if not saved
@@ -86,9 +86,9 @@ export default function AuthButton() {
 
   if (session) {
     return (
-      <div className="p-4 space-y-4">
+      <div className="flex flex-col items-center p-4 space-y-4">
         <p>Welcome <strong>{session.user?.name}</strong> ({session.user?.email})</p>
-        <Image src={session.user?.image || '/default.png'} alt="Profile" width={100} height={100} />
+        <Image src={session.user?.image || '/default.png'} alt="Profile" width={100} height={100} className="rounded-full"/>
         <button className="px-4 py-2 bg-red-600 text-white rounded" onClick={() => signOut()}>
           Sign out
         </button>
